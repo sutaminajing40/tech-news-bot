@@ -1,0 +1,31 @@
+name: Daily Tech News Bot
+
+on:
+  schedule:
+    # 毎日朝9時JST (UTC 0:00)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 手動実行用
+
+jobs:
+  tech-news-summary:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run tech news bot
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: python scripts/tech_news_bot.py
