@@ -10,6 +10,10 @@ import json
 import requests
 from datetime import datetime
 import google.generativeai as genai
+from dotenv import load_dotenv
+
+# .envファイル読み込み
+load_dotenv()
 
 def get_hatena_tech_articles():
     """はてなブックマークのテクノロジーカテゴリから人気記事を取得"""
@@ -64,7 +68,7 @@ def summarize_with_gemini(title, description):
     """Gemini APIを使って記事を要約"""
     try:
         genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         prompt = f"""
 以下の技術記事について、簡潔で分かりやすい要約を日本語で作成してください。
