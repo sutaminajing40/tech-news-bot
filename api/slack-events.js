@@ -91,9 +91,11 @@ async function handleReaction(event) {
       );
       
       if (postResult) {
-        // データベース操作（一時的にスキップ）
-        // TODO: 外部データベースに移行する必要があります
-        console.log('Skipping database operations due to Vercel memory DB limitations');
+        // 質問モードを設定
+        await dataService.setQuestionMode(item.channel, item.ts, articleUrl, user);
+        
+        // インタラクションを記録
+        await dataService.logInteraction('detailed_summary', user, articleUrl, '', detailedSummary, item.channel);
         
         console.log('Detailed summary posted successfully');
       }
