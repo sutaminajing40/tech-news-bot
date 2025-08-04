@@ -13,6 +13,9 @@ let slackService;
 let geminiService;
 let dataService;
 
+// 処理済みイベントを一時的に保存（メモリ内）
+const processedEvents = new Map();
+
 function initializeServices() {
   if (!slackService) {
     console.log('Initializing services...');
@@ -160,6 +163,16 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Slackのretry headerをチェック
+  const retryCount = req.headers['x-slack-retry-num'];
+  const retryReason = req.headers['x-slack-retry-reason'];
+  
+  if (retryCount) {
+    console.log(`Slack retry detected: count=${retryCount}, reason=${retryReason}`);
+    // リトライの場合は処理をスキップ
+    return res.status(200).send('OK');
+  }
+
   // サービスを初期化
   initializeServices();
 
@@ -176,6 +189,26 @@ export default async function handler(req, res) {
     if (body.type === 'event_callback') {
       const event = body.event;
       console.log('Event received:', event);
+      
+      // イベントIDで重複チェック（event_tsとユーザーIDを組み合わせる）
+      const eventId = `${event.event_ts}_${event.user}_${event.type}`;
+      
+      // 既に処理済みのイベントかチェック
+      if (processedEvents.has(eventId)) {
+        console.log('Event already processed, skipping:', eventId);
+        return res.status(200).send('OK');
+      }
+      
+      // イベントを処理済みとしてマーク（10分間保持）
+      processedEvents.set(eventId, Date.now());
+      
+      // 古いイベントをクリーンアップ（10分以上前のもの）
+      const tenMinutesAgo = Date.now() - 10 * 60 * 1000;
+      for (const [key, timestamp] of processedEvents.entries()) {
+        if (timestamp < tenMinutesAgo) {
+          processedEvents.delete(key);
+        }
+      }
       
       // Vercel Functionsでは、レスポンスを返す前に処理を完了する必要がある
       // 非同期処理をPromiseで包んで、エラーをキャッチしつつ処理を実行
