@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "api/slack-events.js": {
+      "maxDuration": 30
+    }
+  },
+  "public": true,
+  "regions": ["iad1"]
+}
