@@ -24,9 +24,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Run tech news bot v2.0
+    - name: Run tech news bot v2.0 (Debug Mode)
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+        DEBUG_BLOCKS: true
       run: python scripts/daily_post.py
