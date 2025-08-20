@@ -1,4 +1,4 @@
-name: Daily Tech News Bot
+name: Daily Tech News Bot v2.0
 
 on:
   schedule:
@@ -24,8 +24,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Run tech news bot
+    - name: Run tech news bot v2.0
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      run: python scripts/tech_news_bot.py
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+      run: python scripts/daily_post.py
