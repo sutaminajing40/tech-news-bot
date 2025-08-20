@@ -203,7 +203,6 @@ def test_incremental_blocks(articles_summary, bot_token, channel, today):
                             "type": "plain_text",
                             "text": "❓ 質問する"
                         },
-                        "style": "secondary",
                         "action_id": "ask_question", 
                         "value": f"question:{article['link']}"
                     }
@@ -341,7 +340,6 @@ def post_full_message_with_debug(articles_summary, bot_token, channel, today):
                         "type": "plain_text",
                         "text": "❓ 質問する"
                     },
-                    "style": "secondary", 
                     "action_id": "ask_question",
                     "value": f"question:{article['link']}"
                 }
