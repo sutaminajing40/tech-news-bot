@@ -1,0 +1,26 @@
+{
+  "name": "tech-news-bot-v2",
+  "version": "2.0.0",
+  "description": "Tech News Bot with Slack Interactive Components support",
+  "main": "api/slack-interactions.js",
+  "scripts": {
+    "start": "node api/slack-interactions.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "dependencies": {
+    "@slack/web-api": "^6.9.0",
+    "@google/generative-ai": "^0.2.1"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "keywords": [
+    "slack",
+    "bot",
+    "tech-news",
+    "gemini",
+    "ai"
+  ],
+  "author": "Tech News Bot Team",
+  "license": "MIT"
+}
