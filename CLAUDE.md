@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-Tech News Bot v2.0 - 毎日午後3時JST（旧朝9時から変更）にはてなブックマークのテクノロジーカテゴリからTOP5記事を取得し、Gemini 2.5 Flash APIで要約してSlackに自動投稿するBot。GitHub Actionsで定時実行。v2.0では詳細要約・質問機能を追加し、Slack内でインタラクティブに操作可能。
+Tech News Bot v2.0 - 毎日正午12時JSTにはてなブックマークのテクノロジーカテゴリからTOP5記事を取得し、Gemini 2.5 Flash APIで要約してSlackに自動投稿するBot。GitHub Actionsで定時実行。v2.0では詳細要約・質問機能を追加し、Slack内でインタラクティブに操作可能。
 
 ## 開発・実行コマンド
 
@@ -56,7 +56,7 @@ gh workflow run "Daily Tech News Bot"
 - `@google/generative-ai` (Gemini API)
 
 ### GitHub Actions設定
-- **スケジュール**: 毎日UTC 6:00（JST 15:00）
+- **スケジュール**: 毎日UTC 3:00（JST 12:00）
 - **環境**: Ubuntu Latest, Python 3.11
 - **Secrets**: `GEMINI_API_KEY`, `SLACK_BOT_TOKEN`, `SLACK_CHANNEL`
 
@@ -69,7 +69,7 @@ gh workflow run "Daily Tech News Bot"
 ### 実行時間変更
 スケジュールを変更する場合は `.github/workflows/daily-tech-news.yml:6` のcron式を編集：
 ```yaml
-- cron: '0 6 * * *'  # JST 15:00
+- cron: '0 3 * * *'  # JST 12:00
 ```
 
 ### Geminiモデル変更

@@ -2,8 +2,8 @@ name: Daily Tech News Bot v2.0
 
 on:
   schedule:
-    # 毎日午後3時JST (UTC 6:00)
-    - cron: '0 6 * * *'
+    # 毎日正午12時JST (UTC 3:00)
+    - cron: '0 3 * * *'
   workflow_dispatch: # 手動実行用
 
 jobs:
